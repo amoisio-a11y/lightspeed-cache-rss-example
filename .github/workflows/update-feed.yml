@@ -30,10 +30,10 @@ jobs:
       - name: Aja Annala-scraperi
         run: python annala_scraper.py
 
-      - name: Committaa feedit, jos muuttuneet
+      - name: Committaa feedit ja state, jos muuttuneet
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add feed.xml feed-annala.xml
+          git add feed.xml feed-annala.xml state-annala.json
           git diff --staged --quiet || git commit -m "Paivita RSS-syotteet"
           git push
