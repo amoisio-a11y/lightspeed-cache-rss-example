@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0">
+  <channel>
+    <title>Helsingin Konservatorio - Uutiset</title>
+    <link>https://www.konservatorio.fi/arkisto/uutiset/</link>
+    <description>Helsingin Konservatorion uutisarkiston epavirallinen RSS-syote</description>
+    <docs>http://www.rssboard.org/rss-specification</docs>
+    <generator>python-feedgen</generator>
+    <language>fi</language>
+    <lastBuildDate>Fri, 24 Jul 2026 06:47:17 +0000</lastBuildDate>
+    <item>
+      <title>Kevät on täynnä konsertteja</title>
+      <link>https://www.konservatorio.fi/uutiset/kevat-on-taynna-konsertteja/</link>
+      <description>Kesä lähenee, mutta talo ei hiljene. Klassinen musiikki soi konservatorion saleissa koko toukokuun. Vielä on luvassa vaikka mitä. Tervetuloa konserttiin! Tänään vappuaattona lavalle nousevat konservatorion…</description>
+      <guid isPermaLink="false">https://www.konservatorio.fi/uutiset/kevat-on-taynna-konsertteja/</guid>
+      <pubDate>Thu, 30 Apr 2026 08:00:00 +0300</pubDate>
+    </item>
+    <item>
+      <title>Konservatorio jää kesälomalle 19.6.2026</title>
+      <link>https://www.konservatorio.fi/uutiset/konservatorio-jaa-kesalomalle-19-6-2026/</link>
+      <description>Konservatorio on auki normaalisti lauantaihin 6.6. asti. 7.6. – 18.6.  avoinna ma–pe klo 8.00–16.00 19.6.–2.8.    Konservatoriokiinteistö on kiinni 3.8.- 9.8.      avoinna ma-pe klo 8.00-16.00 10.8.-31.8.   avoinna ma-la normaaliaukioloaikojen…</description>
+      <guid isPermaLink="false">https://www.konservatorio.fi/uutiset/konservatorio-jaa-kesalomalle-19-6-2026/</guid>
+      <pubDate>Fri, 22 May 2026 08:00:00 +0300</pubDate>
+    </item>
+    <item>
+      <title>Helsingin Konservatorio onnittelee valmistuneita!</title>
+      <link>https://www.konservatorio.fi/uutiset/helsingin-konservatorio-onnittelee-valmistuneita-6/</link>
+      <description>Helsingin Konservatoriosta valmistuu ammattiin tänään 28.5.2026 yhteensä 23 musiikin ammattilaista: 14 klassisen musiikin muusikkoa sekä yhdeksän pianonvirittäjää. Lisäksi tutkinnonosia on suorittanut kolme opiskelijaa;…</description>
+      <guid isPermaLink="false">https://www.konservatorio.fi/uutiset/helsingin-konservatorio-onnittelee-valmistuneita-6/</guid>
+      <pubDate>Thu, 28 May 2026 08:00:00 +0300</pubDate>
+    </item>
+    <item>
+      <title>Helsingin Konservatorio onnittelee myös musiikin taiteen perusopetuksen valmistuneita!</title>
+      <link>https://www.konservatorio.fi/uutiset/helsingin-konservatorio-onnittelee-myos-musiikin-taiteen-perusopetuksen-valmistuneita/</link>
+      <description>Helsingin Konservatoriosta valmistuu tänään 48 oppilasta musiikin taiteen perusopetuksesta. Musiikin taiteen perusopinnot suorittaneita on 31 ja laajan oppimäärän päättötodistuksen saa yhteensä 17 oppilasta.</description>
+      <guid isPermaLink="false">https://www.konservatorio.fi/uutiset/helsingin-konservatorio-onnittelee-myos-musiikin-taiteen-perusopetuksen-valmistuneita/</guid>
+      <pubDate>Thu, 28 May 2026 08:00:00 +0300</pubDate>
+    </item>
+    <item>
+      <title>Oppilas- ja huoltajakyselyn tulokset on julkaistu</title>
+      <link>https://www.konservatorio.fi/uutiset/oppilas-ja-huoltajakyselyn-tulokset-on-julkaistu/</link>
+      <description>Helsingin Konservatoriossa toteutettiin kevätlukukaudella 2025 palautekysely, joka suunnattiin taiteen perusopetuksen yli 13 -vuotiaille perus- ja syventävien opintojen oppilaille ja heidän huoltajilleen. Kyselyssä pyydettiin palautetta musiikin…</description>
+      <guid isPermaLink="false">https://www.konservatorio.fi/uutiset/oppilas-ja-huoltajakyselyn-tulokset-on-julkaistu/</guid>
+      <pubDate>Fri, 05 Jun 2026 08:00:00 +0300</pubDate>
+    </item>
+    <item>
+      <title>Uudet oppilaat on valittu</title>
+      <link>https://www.konservatorio.fi/uutiset/uudet-oppilaat-on-valittu/</link>
+      <description>Tervetuloa taloon, uudet musiikin taiteen perusopetuksen oppilaat! Oppilasvalinnat on nyt tehty, ja kaikille hakijoille on lähetetty sähköpostitse tieto päätöksistä. Mikäli et ole saanut vielä sähköpostia,…</description>
+      <guid isPermaLink="false">https://www.konservatorio.fi/uutiset/uudet-oppilaat-on-valittu/</guid>
+      <pubDate>Tue, 09 Jun 2026 08:00:00 +0300</pubDate>
+    </item>
+    <item>
+      <title>Helsingin Konservatorioon on valittu 37 uutta ammatillisen koulutuksen opiskelijaa</title>
+      <link>https://www.konservatorio.fi/uutiset/helsingin-konservatorioon-on-valittu-37-uutta-ammatillisen-koulutuksen-opiskelijaa/</link>
+      <description>Helsingin Konservatorion ammatilliseen musiikkialan perustutkintokoulutukseen on valittu 37 uutta opiskelijaa: 27 klassisen musiikin muusikon osaamisalalle sekä 10 pianonvirityksen osaamisalalle. Lisäksi tutkinnonosia suorittamaan valittiin kuusi…</description>
+      <guid isPermaLink="false">https://www.konservatorio.fi/uutiset/helsingin-konservatorioon-on-valittu-37-uutta-ammatillisen-koulutuksen-opiskelijaa/</guid>
+      <pubDate>Thu, 11 Jun 2026 08:00:00 +0300</pubDate>
+    </item>
+    <item>
+      <title>Lukuvuoden 2026-2027 alkuun liittyvää informaatiota</title>
+      <link>https://www.konservatorio.fi/uutiset/lukuvuoden-2026-2027-alkuun-liittyvaa-informaatiota/</link>
+      <description>To read the following in English, click here.  Uusille oppilaille  Valmentava opetus ja puhallinstartti Opettajat sopivat oppituntien ajankohdista valmennusoppilaiden ja puhallinstartin oppilaiden huoltajien kanssa 13.-14.8. Opetuksesta sovitaan joko puhelimitse…</description>
+      <guid isPermaLink="false">https://www.konservatorio.fi/uutiset/lukuvuoden-2026-2027-alkuun-liittyvaa-informaatiota/</guid>
+      <pubDate>Wed, 17 Jun 2026 08:00:00 +0300</pubDate>
+    </item>
+    <item>
+      <title>Pia Kärjes-Peltola aloittaa Helsingin Konservatorion vt rehtori-toimitusjohtajana</title>
+      <link>https://www.konservatorio.fi/uutiset/pia-karjes-peltola-aloittaa-helsingin-konservatorion-vt-rehtori-toimitusjohtajana/</link>
+      <description>Rehtori-toimitusjohtaja Hanna Repo-Nikkanen on 18.5. irtisanoutunut tehtävästään Helsingin Konservatorion säätiön palveluksessa. Konservatorion säätiön hallitus on nimittänyt konservatorion apulaisrehtori Pia Kärjes-Peltolan vt. rehtori-toimitusjohtajaksi vuoden 2026 loppuun…</description>
+      <guid isPermaLink="false">https://www.konservatorio.fi/uutiset/pia-karjes-peltola-aloittaa-helsingin-konservatorion-vt-rehtori-toimitusjohtajana/</guid>
+      <pubDate>Mon, 22 Jun 2026 08:00:00 +0300</pubDate>
+    </item>
+    <item>
+      <title>Nuorisokuoromme Strasbourgissa</title>
+      <link>https://www.konservatorio.fi/uutiset/nuorisokuoromme-strasbourgissa/</link>
+      <description>Nuorisokuoromme All 4 Voices (joht. Anna Nora) aloitti kesän tänä vuonna esiintymällä Ranskan Strasbourgissa. Kuorolaiset ehtivät paitsi esiintyä jättimäisessä konsertissa Zénith de Strasbourg’in lavalla, myös…</description>
+      <guid isPermaLink="false">https://www.konservatorio.fi/uutiset/nuorisokuoromme-strasbourgissa/</guid>
+      <pubDate>Wed, 01 Jul 2026 08:00:00 +0300</pubDate>
+    </item>
+  </channel>
+</rss>
