@@ -10,11 +10,28 @@ sivulle valmiiksi (JS vain nayttaa/piilottaa niita valilehtina),
 joten "Helsinki Annalan huvila" -ryhma on suoraan poimittavissa
 omasta <div id="Helsinki Annalan huvila">-lohkostaan ilman
 erillista sivupyyntoa tai taksonomia-URL:a.
+
+TARKEA HUOMIO PUBDATE:STA
+--------------------------
+Tapahtumien omat paivamaarat ovat usein TULEVAISUUDESSA (esim.
+"TIISTAITEEMAT 2026: 26.05.2026 - 25.08.2026"). Jos naita
+kaytettaisiin suoraan RSS:n pubDate-kenttana, monet RSS-lukijat
+tulkitsevat tulevan paivamaaran niin, etta kohde nayttaa "juuri
+nyt" -tuoreelta aina siihen asti kunnes paiva koittaa - talloin
+tulevat tapahtumat "floodaavat" feedin karjen pysyvasti.
+
+Tama scraperi kayttaa siksi pubDate:na sita ajanhetkea, jolloin
+tapahtuma naytettiin syotteessa ENSIMMAISTA KERTAA (state-tiedosto
+state-annala.json muistaa taman ajojen valilla), ei tapahtuman
+omaa kalenteripaivaa. Tapahtuman todellinen paivamaara/kellonaika
+nakyy edelleen kuvauksessa.
 """
 
+import json
 import re
 import sys
 from datetime import datetime
+from pathlib import Path
 from zoneinfo import ZoneInfo
 
 import requests
@@ -24,6 +41,7 @@ from feedgen.feed import FeedGenerator
 SOURCE_URL = "https://hyotykasviyhdistys.fi/tapahtumat-ja-kurssit/"
 SECTION_ID = "Helsinki Annalan huvila"
 OUTPUT_FILE = "feed-annala.xml"
+STATE_FILE = "state-annala.json"
 TIMEZONE = ZoneInfo("Europe/Helsinki")
 
 FEED_TITLE = "Hyötykasviyhdistys - Annalan Huvilan tapahtumat"
@@ -44,6 +62,25 @@ def fetch_html(url: str) -> str:
     response = requests.get(url, headers=headers, timeout=20)
     response.raise_for_status()
     return response.text
+
+
+def load_state(path: str) -> dict:
+    file = Path(path)
+    if not file.exists():
+        return {}
+    try:
+        return json.loads(file.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError):
+        # Vioittunut/lukukelvoton state-tiedosto -> aloitetaan tyhjasta,
+        # tama vain nollaa "ensi kertaa nahty" -ajat kertaalleen.
+        return {}
+
+
+def save_state(path: str, state: dict) -> None:
+    Path(path).write_text(
+        json.dumps(state, ensure_ascii=False, indent=2, sort_keys=True),
+        encoding="utf-8",
+    )
 
 
 def parse_events(html: str):
@@ -69,15 +106,7 @@ def parse_events(html: str):
             continue
 
         title = title_el.get_text(strip=True)
-
-        # Paivamaara voi olla "26.05.2026" tai "26.05.2026 - 25.08.2026"
         date_text = date_el.get_text(" ", strip=True)
-        date_matches = re.findall(r"(\d{2})\.(\d{2})\.(\d{4})", date_text)
-        if not date_matches:
-            continue
-        day, month, year = (int(x) for x in date_matches[0])
-        pub_date = datetime(year, month, day, 8, 0, 0, tzinfo=TIMEZONE)
-
         time_text = time_el.get_text(" ", strip=True) if time_el else ""
 
         description_parts = [date_text]
@@ -90,12 +119,39 @@ def parse_events(html: str):
                 "title": title,
                 "link": href,
                 "description": description,
-                "pub_date": pub_date,
                 "guid": href,
             }
         )
 
     return events
+
+
+def assign_pub_dates(events: list, state: dict, run_time: datetime) -> dict:
+    """
+    Palauttaa uuden state-dictin. Jokaiselle tapahtumalle:
+    - jos linkki on jo state:ssa -> kaytetaan tallennettua aikaleimaa
+    - jos linkki on uusi -> aikaleimaksi run_time (nyt), tallennetaan
+
+    State rakennetaan uudelleen VAIN nyt loydetyista tapahtumista,
+    jotta jo poistuneiden (menneiden) tapahtumien tiedot eivat
+    kasva tiedostoa loputtomiin.
+    """
+    new_state = {}
+
+    for event in events:
+        key = event["guid"]
+        if key in state:
+            try:
+                first_seen = datetime.fromisoformat(state[key])
+            except ValueError:
+                first_seen = run_time
+        else:
+            first_seen = run_time
+
+        new_state[key] = first_seen.isoformat()
+        event["pub_date"] = first_seen
+
+    return new_state
 
 
 def build_feed(events):
@@ -105,7 +161,8 @@ def build_feed(events):
     fg.description(FEED_DESCRIPTION)
     fg.language(FEED_LANGUAGE)
 
-    for event in events:
+    # Uusimmat (viimeksi ensi kertaa nahdyt) ensin
+    for event in sorted(events, key=lambda e: e["pub_date"], reverse=True):
         fe = fg.add_entry()
         fe.id(event["guid"])
         fe.title(event["title"])
@@ -134,9 +191,19 @@ def main():
         )
         sys.exit(2)
 
+    run_time = datetime.now(TIMEZONE)
+    state = load_state(STATE_FILE)
+    new_state = assign_pub_dates(events, state, run_time)
+    save_state(STATE_FILE, new_state)
+
     fg = build_feed(events)
     fg.rss_file(OUTPUT_FILE, pretty=True)
-    print(f"Kirjoitettu {len(events)} tapahtumaa tiedostoon {OUTPUT_FILE}")
+
+    new_count = sum(1 for e in events if e["guid"] not in state)
+    print(
+        f"Kirjoitettu {len(events)} tapahtumaa tiedostoon {OUTPUT_FILE} "
+        f"({new_count} uutta)"
+    )
 
 
 if __name__ == "__main__":
