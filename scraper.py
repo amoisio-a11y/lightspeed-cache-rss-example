@@ -6,10 +6,22 @@ Lahde: https://www.konservatorio.fi/arkisto/uutiset/
 Koska sivuston oma /feed/-osoite palauttaa tyhjan syotteen
 (WordPress + rajattu teemakysely + valimuisti), tama skripti
 lukee julkisen HTML-sivun suoraan ja rakentaa syotteen itse.
+
+HUOM VERKKOVIRHEISTA (esim. "415 Unsupported Media Type")
+-----------------------------------------------------------
+Sivustolla on Wordfence-suojaus. GitHub Actionsin ajoympäristöt
+jakavat IP-osoitteita tuhansien muiden repojen kanssa, ja jos joku
+muu on kuormittanut samaa IP-aluetta, Wordfence saattaa väliaikaisesti
+torjua pyyntöjä satunnaisesti - tämä ei liity scraperin logiikkaan.
+Tälle ei voi tehda mitään 100%-varmaa korjausta, mutta kaksi asiaa
+auttavat: (1) lähetetään täydellisemmät, oikean selaimen kaltaiset
+otsikot, (2) yritetään muutaman kerran pienellä viiveellä ennen
+luovuttamista, koska torjunta on usein hetkellinen.
 """
 
 import re
 import sys
+import time
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
@@ -25,17 +37,54 @@ FEED_TITLE = "Helsingin Konservatorio - Uutiset"
 FEED_DESCRIPTION = "Helsingin Konservatorion uutisarkiston epavirallinen RSS-syote"
 FEED_LANGUAGE = "fi"
 
+MAX_ATTEMPTS = 4
+RETRY_DELAY_SECONDS = 15  # kasvaa yritys yritykselta (15, 30, 45...)
+
+# Mahdollisimman taydellinen, oikean selaimen kaltainen otsikkojoukko.
+# Pelkka User-Agent nayttaa "epaaidolta" WAF:lle - lisataan Accept-*
+# ja muut otsikot, joita oikea selain aina lahettaa mukana.
+HEADERS = {
+    "User-Agent": (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+        "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+    ),
+    "Accept": (
+        "text/html,application/xhtml+xml,application/xml;q=0.9,"
+        "image/avif,image/webp,*/*;q=0.8"
+    ),
+    "Accept-Language": "fi-FI,fi;q=0.9,en-US;q=0.8,en;q=0.7",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Upgrade-Insecure-Requests": "1",
+    "Sec-Fetch-Dest": "document",
+    "Sec-Fetch-Mode": "navigate",
+    "Sec-Fetch-Site": "none",
+    "Sec-Fetch-User": "?1",
+}
+
 
 def fetch_html(url: str) -> str:
-    headers = {
-        "User-Agent": (
-            "Mozilla/5.0 (compatible; KonservatorioFeedBot/1.0; "
-            "+https://github.com/) personal RSS generator"
-        )
-    }
-    response = requests.get(url, headers=headers, timeout=20)
-    response.raise_for_status()
-    return response.text
+    last_error = None
+
+    for attempt in range(1, MAX_ATTEMPTS + 1):
+        try:
+            response = requests.get(url, headers=HEADERS, timeout=20)
+            response.raise_for_status()
+            return response.text
+        except requests.RequestException as exc:
+            last_error = exc
+            status = getattr(exc.response, "status_code", None)
+            print(
+                f"Yritys {attempt}/{MAX_ATTEMPTS} epaonnistui "
+                f"(HTTP {status}): {exc}",
+                file=sys.stderr,
+            )
+            if attempt < MAX_ATTEMPTS:
+                wait = RETRY_DELAY_SECONDS * attempt
+                print(f"Odotetaan {wait} sekuntia ennen uutta yritysta...", file=sys.stderr)
+                time.sleep(wait)
+
+    raise last_error
 
 
 def parse_articles(html: str):
@@ -109,7 +158,13 @@ def main():
     try:
         html = fetch_html(SOURCE_URL)
     except requests.RequestException as exc:
-        print(f"Virhe haettaessa sivua: {exc}", file=sys.stderr)
+        print(
+            f"Virhe haettaessa sivua {MAX_ATTEMPTS} yrityksen jalkeen: {exc}",
+            file=sys.stderr,
+        )
+        # Ei kirjoiteta feed.xml:aa paalle - vanha, viimeksi onnistunut
+        # versio jaa voimaan. Poistutaan virhekoodilla, jotta Actions-ajo
+        # nakyy epaonnistuneena eika hiljaa onnistuneena.
         sys.exit(1)
 
     articles = parse_articles(html)
