@@ -17,6 +17,14 @@ Tälle ei voi tehda mitään 100%-varmaa korjausta, mutta kaksi asiaa
 auttavat: (1) lähetetään täydellisemmät, oikean selaimen kaltaiset
 otsikot, (2) yritetään muutaman kerran pienellä viiveellä ennen
 luovuttamista, koska torjunta on usein hetkellinen.
+
+HUOM: Accept-Encoding-otsikkoa EI aseteta kasin (esim. "br" =
+Brotli), koska requests-kirjasto ei osaa purkaa Brotli-vastausta
+ilman erikseen asennettua brotli-pakettia - jos otsikossa luvataan
+tukea jota ei oikeasti ole, palvelin saattaa silti vastata
+Brotli-pakattuna ja tulos on lukukelvotonta "roskaa". requests
+asettaa taman otsikon itse oikein sen mukaan, mita se oikeasti
+osaa purkaa.
 """
 
 import re
@@ -40,9 +48,8 @@ FEED_LANGUAGE = "fi"
 MAX_ATTEMPTS = 4
 RETRY_DELAY_SECONDS = 15  # kasvaa yritys yritykselta (15, 30, 45...)
 
-# Mahdollisimman taydellinen, oikean selaimen kaltainen otsikkojoukko.
-# Pelkka User-Agent nayttaa "epaaidolta" WAF:lle - lisataan Accept-*
-# ja muut otsikot, joita oikea selain aina lahettaa mukana.
+# Oikean selaimen kaltaiset otsikot. HUOM: Accept-Encoding EI ole
+# tassa listassa tarkoituksella - katso yllaoleva selitys.
 HEADERS = {
     "User-Agent": (
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
@@ -53,7 +60,6 @@ HEADERS = {
         "image/avif,image/webp,*/*;q=0.8"
     ),
     "Accept-Language": "fi-FI,fi;q=0.9,en-US;q=0.8,en;q=0.7",
-    "Accept-Encoding": "gzip, deflate, br",
     "Connection": "keep-alive",
     "Upgrade-Insecure-Requests": "1",
     "Sec-Fetch-Dest": "document",
@@ -154,6 +160,31 @@ def build_feed(articles):
     return fg
 
 
+def print_diagnostics(html: str) -> None:
+    """
+    Tulostaa vihjeita stderriin, kun 0 artikkelia loytyy, jotta
+    seuraavan kerran ei tarvitse arvailla sokkona mika meni pieleen.
+    """
+    snippet = html[:500].replace("\n", " ")
+    print(f"Vastauksen alku (500 merkkia): {snippet!r}", file=sys.stderr)
+
+    lowered = html.lower()
+    if "wordfence" in lowered or "verifying you are human" in lowered or "checking your browser" in lowered:
+        print(
+            "Vihje: vastaus nayttaa Wordfencen tunnistushaasteelta "
+            "(ei varsinaista sivun sisaltoa). Tama on eri ongelma kuin "
+            "415-virhe - todennakoisesti WAF paasti pyynnon lapi mutta "
+            "tarjosi ihmistarkastussivun oikean sisallon sijaan.",
+            file=sys.stderr,
+        )
+    elif len(html) < 200:
+        print(
+            "Vihje: vastaus on epailyttavan lyhyt - saattaa olla "
+            "purkamaton/rikkoutunut sisalto (esim. pakkausongelma).",
+            file=sys.stderr,
+        )
+
+
 def main():
     try:
         html = fetch_html(SOURCE_URL)
@@ -162,9 +193,6 @@ def main():
             f"Virhe haettaessa sivua {MAX_ATTEMPTS} yrityksen jalkeen: {exc}",
             file=sys.stderr,
         )
-        # Ei kirjoiteta feed.xml:aa paalle - vanha, viimeksi onnistunut
-        # versio jaa voimaan. Poistutaan virhekoodilla, jotta Actions-ajo
-        # nakyy epaonnistuneena eika hiljaa onnistuneena.
         sys.exit(1)
 
     articles = parse_articles(html)
@@ -175,6 +203,7 @@ def main():
             "saattanut muuttua. feed.xml:aa ei kirjoiteta paalle.",
             file=sys.stderr,
         )
+        print_diagnostics(html)
         sys.exit(2)
 
     fg = build_feed(articles)
