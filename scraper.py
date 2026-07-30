@@ -7,24 +7,19 @@ Koska sivuston oma /feed/-osoite palauttaa tyhjan syotteen
 (WordPress + rajattu teemakysely + valimuisti), tama skripti
 lukee julkisen HTML-sivun suoraan ja rakentaa syotteen itse.
 
-HUOM VERKKOVIRHEISTA (esim. "415 Unsupported Media Type")
------------------------------------------------------------
-Sivustolla on Wordfence-suojaus. GitHub Actionsin ajoympäristöt
-jakavat IP-osoitteita tuhansien muiden repojen kanssa, ja jos joku
-muu on kuormittanut samaa IP-aluetta, Wordfence saattaa väliaikaisesti
-torjua pyyntöjä satunnaisesti - tämä ei liity scraperin logiikkaan.
-Tälle ei voi tehda mitään 100%-varmaa korjausta, mutta kaksi asiaa
-auttavat: (1) lähetetään täydellisemmät, oikean selaimen kaltaiset
-otsikot, (2) yritetään muutaman kerran pienellä viiveellä ennen
-luovuttamista, koska torjunta on usein hetkellinen.
+HUOM: PLAYWRIGHT VAADITAAN (ei enaa pelkka requests)
+------------------------------------------------------
+Sivustolla on JS-pohjainen selainhaaste ("One moment, please...",
+5 sekunnin setTimeout + window.location.reload()), joka nayttaa
+oikean sisallon vasta kun JavaScript on suoritettu selaimessa.
+Tavallinen requests.get() ei suorita JS:aa, joten se jaa jumiin
+tahan haastesivuun pysyvasti - eivat auta sen enempaa otsikot
+kuin uudelleenyrityksetkaan.
 
-HUOM: Accept-Encoding-otsikkoa EI aseteta kasin (esim. "br" =
-Brotli), koska requests-kirjasto ei osaa purkaa Brotli-vastausta
-ilman erikseen asennettua brotli-pakettia - jos otsikossa luvataan
-tukea jota ei oikeasti ole, palvelin saattaa silti vastata
-Brotli-pakattuna ja tulos on lukukelvotonta "roskaa". requests
-asettaa taman otsikon itse oikein sen mukaan, mita se oikeasti
-osaa purkaa.
+Ainoa toimiva ratkaisu on kayttaa oikeaa (headless) selainmoottoria,
+tassa Playwright + Chromium, aivan kuten Kaapelitehdas-scraperissa.
+Playwright suorittaa sivun JS:n, odottaa haastesivun automaattisen
+uudelleenlatauksen, ja palauttaa lopulta oikean sisallon.
 """
 
 import re
@@ -33,9 +28,10 @@ import time
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
-import requests
 from bs4 import BeautifulSoup
 from feedgen.feed import FeedGenerator
+from playwright.sync_api import Error as PlaywrightError
+from playwright.sync_api import sync_playwright
 
 SOURCE_URL = "https://www.konservatorio.fi/arkisto/uutiset/"
 OUTPUT_FILE = "feed.xml"
@@ -45,47 +41,90 @@ FEED_TITLE = "Helsingin Konservatorio - Uutiset"
 FEED_DESCRIPTION = "Helsingin Konservatorion uutisarkiston epavirallinen RSS-syote"
 FEED_LANGUAGE = "fi"
 
-MAX_ATTEMPTS = 4
-RETRY_DELAY_SECONDS = 15  # kasvaa yritys yritykselta (15, 30, 45...)
+USER_AGENT = (
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+)
 
-# Oikean selaimen kaltaiset otsikot. HUOM: Accept-Encoding EI ole
-# tassa listassa tarkoituksella - katso yllaoleva selitys.
-HEADERS = {
-    "User-Agent": (
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-        "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
-    ),
-    "Accept": (
-        "text/html,application/xhtml+xml,application/xml;q=0.9,"
-        "image/avif,image/webp,*/*;q=0.8"
-    ),
-    "Accept-Language": "fi-FI,fi;q=0.9,en-US;q=0.8,en;q=0.7",
-    "Connection": "keep-alive",
-    "Upgrade-Insecure-Requests": "1",
-    "Sec-Fetch-Dest": "document",
-    "Sec-Fetch-Mode": "navigate",
-    "Sec-Fetch-Site": "none",
-    "Sec-Fetch-User": "?1",
-}
+# Merkkijonoja, joiden esiintyminen sivun otsikossa/sisallossa
+# paljastaa, etta ollaan yha JS-haastesivulla eika oikealla
+# sisaltosivulla.
+CHALLENGE_MARKERS = [
+    "one moment, please",
+    "just a moment",
+    "checking your browser",
+    "verifying you are human",
+]
+
+MAX_CHALLENGE_WAITS = 4          # montako kertaa odotetaan haasteen selvista
+CHALLENGE_WAIT_MS = 7000         # haaste lataa itsensa uudelleen 5s kohdalla
+MAX_FETCH_ATTEMPTS = 3           # koko selainajon uudelleenyritys (esim. aikakatkaisut)
+RETRY_DELAY_SECONDS = 20
+
+
+class ChallengeNotResolvedError(Exception):
+    """JS-haastesivu ei selvinnyt varatussa ajassa."""
+
+
+def _looks_like_challenge(title: str, html: str) -> bool:
+    lowered_title = (title or "").lower()
+    lowered_html = (html or "").lower()
+    return any(
+        marker in lowered_title or marker in lowered_html
+        for marker in CHALLENGE_MARKERS
+    )
+
+
+def fetch_html_once(url: str) -> str:
+    with sync_playwright() as p:
+        browser = p.chromium.launch()
+        try:
+            context = browser.new_context(
+                user_agent=USER_AGENT,
+                locale="fi-FI",
+            )
+            page = context.new_page()
+            page.goto(url, wait_until="load", timeout=30000)
+
+            for attempt in range(1, MAX_CHALLENGE_WAITS + 1):
+                html = page.content()
+                title = page.title()
+                if not _looks_like_challenge(title, html):
+                    return html
+
+                print(
+                    f"JS-haastesivu havaittu (yritys {attempt}/{MAX_CHALLENGE_WAITS}), "
+                    f"odotetaan {CHALLENGE_WAIT_MS} ms automaattista uudelleenlatausta...",
+                    file=sys.stderr,
+                )
+                page.wait_for_timeout(CHALLENGE_WAIT_MS)
+                # Sivu lataa itsensa uudelleen omalla JS:llaan (window.location.reload()),
+                # mutta varmuuden vuoksi odotetaan viela etta lataus on valmis.
+                try:
+                    page.wait_for_load_state("load", timeout=15000)
+                except PlaywrightError:
+                    pass  # jatketaan silti - tarkistetaan sisalto seuraavalla kierroksella
+
+            raise ChallengeNotResolvedError(
+                f"JS-haastesivu ei selvinnyt {MAX_CHALLENGE_WAITS} yrityksen jalkeen"
+            )
+        finally:
+            browser.close()
 
 
 def fetch_html(url: str) -> str:
     last_error = None
 
-    for attempt in range(1, MAX_ATTEMPTS + 1):
+    for attempt in range(1, MAX_FETCH_ATTEMPTS + 1):
         try:
-            response = requests.get(url, headers=HEADERS, timeout=20)
-            response.raise_for_status()
-            return response.text
-        except requests.RequestException as exc:
+            return fetch_html_once(url)
+        except (PlaywrightError, ChallengeNotResolvedError) as exc:
             last_error = exc
-            status = getattr(exc.response, "status_code", None)
             print(
-                f"Yritys {attempt}/{MAX_ATTEMPTS} epaonnistui "
-                f"(HTTP {status}): {exc}",
+                f"Sivun haku epaonnistui (yritys {attempt}/{MAX_FETCH_ATTEMPTS}): {exc}",
                 file=sys.stderr,
             )
-            if attempt < MAX_ATTEMPTS:
+            if attempt < MAX_FETCH_ATTEMPTS:
                 wait = RETRY_DELAY_SECONDS * attempt
                 print(f"Odotetaan {wait} sekuntia ennen uutta yritysta...", file=sys.stderr)
                 time.sleep(wait)
@@ -103,10 +142,8 @@ def parse_articles(html: str):
         paragraph = tease.find("p")
 
         if not (date_span and title_link and paragraph):
-            # Rakenne ei tasmaa odotettuun -> ohitetaan tama artikkeli
             continue
 
-        # Paivamaara on muotoa "01.07.2026:" (mahd. kellon ikoni edessa)
         date_text = date_span.get_text(strip=True)
         date_match = re.search(r"(\d{2})\.(\d{2})\.(\d{4})", date_text)
         if not date_match:
@@ -117,7 +154,6 @@ def parse_articles(html: str):
         title = title_link.get_text(strip=True)
         link = title_link["href"]
 
-        # Kuvausteksti: koko <p>:n teksti miinus "Lue lisaa" -linkin oma teksti
         read_more = paragraph.find("a", class_="read-more")
         if read_more:
             read_more_text = read_more.get_text(strip=True)
@@ -126,7 +162,6 @@ def parse_articles(html: str):
         else:
             description = paragraph.get_text(" ", strip=True)
 
-        # Uniikki id: kaytetaan artikkelin linkkia
         guid = link
 
         articles.append(
@@ -161,26 +196,13 @@ def build_feed(articles):
 
 
 def print_diagnostics(html: str) -> None:
-    """
-    Tulostaa vihjeita stderriin, kun 0 artikkelia loytyy, jotta
-    seuraavan kerran ei tarvitse arvailla sokkona mika meni pieleen.
-    """
     snippet = html[:500].replace("\n", " ")
     print(f"Vastauksen alku (500 merkkia): {snippet!r}", file=sys.stderr)
-
-    lowered = html.lower()
-    if "wordfence" in lowered or "verifying you are human" in lowered or "checking your browser" in lowered:
+    if _looks_like_challenge("", html):
         print(
-            "Vihje: vastaus nayttaa Wordfencen tunnistushaasteelta "
-            "(ei varsinaista sivun sisaltoa). Tama on eri ongelma kuin "
-            "415-virhe - todennakoisesti WAF paasti pyynnon lapi mutta "
-            "tarjosi ihmistarkastussivun oikean sisallon sijaan.",
-            file=sys.stderr,
-        )
-    elif len(html) < 200:
-        print(
-            "Vihje: vastaus on epailyttavan lyhyt - saattaa olla "
-            "purkamaton/rikkoutunut sisalto (esim. pakkausongelma).",
+            "Vihje: vastaus nayttaa yha JS-haastesivulta odotusajan "
+            "jalkeenkin - sivusto on saattanut kiristaa suojaustaan "
+            "entisestaan.",
             file=sys.stderr,
         )
 
@@ -188,9 +210,9 @@ def print_diagnostics(html: str) -> None:
 def main():
     try:
         html = fetch_html(SOURCE_URL)
-    except requests.RequestException as exc:
+    except (PlaywrightError, ChallengeNotResolvedError) as exc:
         print(
-            f"Virhe haettaessa sivua {MAX_ATTEMPTS} yrityksen jalkeen: {exc}",
+            f"Virhe haettaessa sivua {MAX_FETCH_ATTEMPTS} yrityksen jalkeen: {exc}",
             file=sys.stderr,
         )
         sys.exit(1)
