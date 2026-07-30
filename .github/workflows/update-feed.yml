@@ -24,6 +24,9 @@ jobs:
       - name: Asenna riippuvuudet
         run: pip install -r requirements.txt
 
+      - name: Asenna Playwright + Chromium
+        run: playwright install --with-deps chromium
+
       - name: Aja Konservatorio-scraperi
         run: python scraper.py
 
