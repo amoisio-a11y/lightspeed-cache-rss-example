@@ -7,7 +7,7 @@
     <docs>http://www.rssboard.org/rss-specification</docs>
     <generator>python-feedgen</generator>
     <language>fi</language>
-    <lastBuildDate>Mon, 17 Aug 2026 05:24:56 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 17 Aug 2026 13:30:51 +0000</lastBuildDate>
     <item>
       <title>IKEBANA – JAPANILAINEN KUKKIENASETTELUN TAIDE</title>
       <link>https://hyotykasviyhdistys.fi/tapahtumat/ikebanajapanilainenkukkienasetteluntaide/</link>
@@ -23,17 +23,17 @@
       <pubDate>Fri, 24 Jul 2026 15:20:35 +0300</pubDate>
     </item>
     <item>
+      <title>ANNALAN HUVILAN SUNNUNTAIKAHVILA</title>
+      <link>https://hyotykasviyhdistys.fi/tapahtumat/huvilansunnuntaikahvila/</link>
+      <description>02.08.2026                           - 13.12.2026 | Klo: 12-16</description>
+      <guid isPermaLink="false">https://hyotykasviyhdistys.fi/tapahtumat/huvilansunnuntaikahvila/</guid>
+      <pubDate>Fri, 24 Jul 2026 15:20:35 +0300</pubDate>
+    </item>
+    <item>
       <title>TIISTAITEEMAT 2026</title>
       <link>https://hyotykasviyhdistys.fi/tapahtumat/tiistaiteemat-2026/</link>
       <description>26.05.2026                           - 25.08.2026 | Klo: 17.30 (luento/kierros) 16-17.30 kahvila</description>
       <guid isPermaLink="false">https://hyotykasviyhdistys.fi/tapahtumat/tiistaiteemat-2026/</guid>
-      <pubDate>Fri, 24 Jul 2026 15:20:35 +0300</pubDate>
-    </item>
-    <item>
-      <title>ANNALAN HUVILAN SUNNUNTAIKAHVILA kesätauko alkaa 21.6.</title>
-      <link>https://hyotykasviyhdistys.fi/tapahtumat/huvilansunnuntaikahvila/</link>
-      <description>11.11.2025                           - 31.05.2026 | Klo: 12-16</description>
-      <guid isPermaLink="false">https://hyotykasviyhdistys.fi/tapahtumat/huvilansunnuntaikahvila/</guid>
       <pubDate>Fri, 24 Jul 2026 15:20:35 +0300</pubDate>
     </item>
     <item>
