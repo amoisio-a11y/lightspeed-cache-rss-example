@@ -7,14 +7,7 @@
     <docs>http://www.rssboard.org/rss-specification</docs>
     <generator>python-feedgen</generator>
     <language>fi</language>
-    <lastBuildDate>Fri, 21 Aug 2026 09:23:41 +0000</lastBuildDate>
-    <item>
-      <title>Helsingin Konservatorio onnittelee valmistuneita!</title>
-      <link>https://www.konservatorio.fi/uutiset/helsingin-konservatorio-onnittelee-valmistuneita-6/</link>
-      <description>Helsingin Konservatoriosta valmistuu ammattiin tänään 28.5.2026 yhteensä 23 musiikin ammattilaista: 14 klassisen musiikin muusikkoa sekä yhdeksän pianonvirittäjää. Lisäksi tutkinnonosia on suorittanut kolme opiskelijaa;…</description>
-      <guid isPermaLink="false">https://www.konservatorio.fi/uutiset/helsingin-konservatorio-onnittelee-valmistuneita-6/</guid>
-      <pubDate>Thu, 28 May 2026 08:00:00 +0300</pubDate>
-    </item>
+    <lastBuildDate>Fri, 21 Aug 2026 13:36:09 +0000</lastBuildDate>
     <item>
       <title>Helsingin Konservatorio onnittelee myös musiikin taiteen perusopetuksen valmistuneita!</title>
       <link>https://www.konservatorio.fi/uutiset/helsingin-konservatorio-onnittelee-myos-musiikin-taiteen-perusopetuksen-valmistuneita/</link>
@@ -77,6 +70,13 @@
       <description>Helsingin Konservatorion syksy on jälleen kerran täynnä tapahtumia! Konserttikausi käynnistyy Taiteiden yönä tänä torstaina 20.8. peräti kolmella konsertilla! Tällä kertaa mukana on myös Kaartin soittokunta.</description>
       <guid isPermaLink="false">https://www.konservatorio.fi/uutiset/syksy-saapuu-ja-musiikki-soi/</guid>
       <pubDate>Wed, 19 Aug 2026 08:00:00 +0300</pubDate>
+    </item>
+    <item>
+      <title>Musiikkiharrastuksen ehtii aloittaa vielä tänä syksynä</title>
+      <link>https://www.konservatorio.fi/uutiset/musiikkiharrastuksen-ehtii-aloittaa-viela-tana-syksyna/</link>
+      <description>Musiikki on mukava harrastus, niin isoille, kuin pienillekin. Juuri nyt on hyvä aika aloittaa se, etenkin jos sattuu olemaan 0–11-vuotias tai aikuinen. Kuoroon ja muskariin…</description>
+      <guid isPermaLink="false">https://www.konservatorio.fi/uutiset/musiikkiharrastuksen-ehtii-aloittaa-viela-tana-syksyna/</guid>
+      <pubDate>Fri, 21 Aug 2026 08:00:00 +0300</pubDate>
     </item>
   </channel>
 </rss>
