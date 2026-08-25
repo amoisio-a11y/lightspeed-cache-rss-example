@@ -7,7 +7,7 @@
     <docs>http://www.rssboard.org/rss-specification</docs>
     <generator>python-feedgen</generator>
     <language>fi</language>
-    <lastBuildDate>Tue, 25 Aug 2026 09:23:14 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 25 Aug 2026 13:39:29 +0000</lastBuildDate>
     <item>
       <title>IKEBANA – JAPANILAINEN KUKKIENASETTELUN TAIDE</title>
       <link>https://hyotykasviyhdistys.fi/tapahtumat/ikebanajapanilainenkukkienasetteluntaide/</link>
@@ -42,6 +42,27 @@
       <description>05.09.2026                           - 05.09.2026 | Klo: 11-15</description>
       <guid isPermaLink="false">https://hyotykasviyhdistys.fi/tapahtumat/syystori-6/</guid>
       <pubDate>Fri, 14 Aug 2026 00:33:00 +0300</pubDate>
+    </item>
+    <item>
+      <title>KASVIVÄRJÄYSKURSSI</title>
+      <link>https://hyotykasviyhdistys.fi/tapahtumat/kasvivarjayskurssi-2/</link>
+      <description>18.09.2026                           - 19.09.2026 | Klo: PE klo 16-19 JA LA klo 10-15</description>
+      <guid isPermaLink="false">https://hyotykasviyhdistys.fi/tapahtumat/kasvivarjayskurssi-2/</guid>
+      <pubDate>Tue, 25 Aug 2026 16:39:29 +0300</pubDate>
+    </item>
+    <item>
+      <title>ALKU&amp;JUURI PUOTI SIJAITSEE PASILASSA</title>
+      <link>https://hyotykasviyhdistys.fi/tapahtumat/puoti-aukeaa-uudessa-osoitteessa/</link>
+      <description>08.09.2026 | Klo: 10-17</description>
+      <guid isPermaLink="false">https://hyotykasviyhdistys.fi/tapahtumat/puoti-aukeaa-uudessa-osoitteessa/</guid>
+      <pubDate>Tue, 25 Aug 2026 16:39:29 +0300</pubDate>
+    </item>
+    <item>
+      <title>SIENIVILJELY DEMO VIIMEISESSÄ TIISTAITEEMASSA</title>
+      <link>https://hyotykasviyhdistys.fi/tapahtumat/sieniviljely-demo-viimeisessa-tiistaiteemassa/</link>
+      <description>01.09.2026 | Klo: 17.30</description>
+      <guid isPermaLink="false">https://hyotykasviyhdistys.fi/tapahtumat/sieniviljely-demo-viimeisessa-tiistaiteemassa/</guid>
+      <pubDate>Tue, 25 Aug 2026 16:39:29 +0300</pubDate>
     </item>
   </channel>
 </rss>
