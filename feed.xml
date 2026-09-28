@@ -7,14 +7,7 @@
     <docs>http://www.rssboard.org/rss-specification</docs>
     <generator>python-feedgen</generator>
     <language>fi</language>
-    <lastBuildDate>Mon, 28 Sep 2026 06:02:19 +0000</lastBuildDate>
-    <item>
-      <title>Oppilas- ja huoltajakyselyn tulokset on julkaistu</title>
-      <link>https://www.konservatorio.fi/uutiset/oppilas-ja-huoltajakyselyn-tulokset-on-julkaistu/</link>
-      <description>Helsingin Konservatoriossa toteutettiin kevätlukukaudella 2025 palautekysely, joka suunnattiin taiteen perusopetuksen yli 13 -vuotiaille perus- ja syventävien opintojen oppilaille ja heidän huoltajilleen. Kyselyssä pyydettiin palautetta musiikin…</description>
-      <guid isPermaLink="false">https://www.konservatorio.fi/uutiset/oppilas-ja-huoltajakyselyn-tulokset-on-julkaistu/</guid>
-      <pubDate>Fri, 05 Jun 2026 08:00:00 +0300</pubDate>
-    </item>
+    <lastBuildDate>Mon, 28 Sep 2026 17:06:23 +0000</lastBuildDate>
     <item>
       <title>Uudet oppilaat on valittu</title>
       <link>https://www.konservatorio.fi/uutiset/uudet-oppilaat-on-valittu/</link>
@@ -77,6 +70,13 @@
       <description>Aiemmissa Helsinki Lied -kilpailuissa palkitut liedparit nousevat Konserttisalin lavalle perjantaina 25.9. Eläköön Helsinki Lied! konsertilla kerätään varoja liedmusiikin edistämiseksi sekä seuraavan Helsinki Lied -kilpailun järjestämiseen.</description>
       <guid isPermaLink="false">https://www.konservatorio.fi/uutiset/elakoon-helsinki-lied/</guid>
       <pubDate>Tue, 08 Sep 2026 08:00:00 +0300</pubDate>
+    </item>
+    <item>
+      <title>Maakunnallisten soitinten hakuaika on 1.-30.10.</title>
+      <link>https://www.konservatorio.fi/uutiset/maakunnallisten-soitinten-hakuaika-on-1-30-10/</link>
+      <description>Suomen Kulttuurirahaston Helsingin Konservatoriolle lahjoittamat Maakunnalliset soittimet ovat jälleen Uudenmaan alueella toimivien muusikoiden ja musiikin opiskelijoiden lainattavissa. Kaudeksi 1.2.2027–31.12.2028 lainattavissa ovat BAROKKIVIULU ja -JOUSI, Elina…</description>
+      <guid isPermaLink="false">https://www.konservatorio.fi/uutiset/maakunnallisten-soitinten-hakuaika-on-1-30-10/</guid>
+      <pubDate>Mon, 28 Sep 2026 08:00:00 +0300</pubDate>
     </item>
   </channel>
 </rss>
