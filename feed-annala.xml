@@ -7,19 +7,12 @@
     <docs>http://www.rssboard.org/rss-specification</docs>
     <generator>python-feedgen</generator>
     <language>fi</language>
-    <lastBuildDate>Thu, 15 Oct 2026 05:22:10 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 15 Oct 2026 13:45:11 +0000</lastBuildDate>
     <item>
       <title>IKEBANA – JAPANILAINEN KUKKIENASETTELUN TAIDE</title>
       <link>https://hyotykasviyhdistys.fi/tapahtumat/ikebanajapanilainenkukkienasetteluntaide/</link>
       <description>14.09.2026                           - 23.11.2026 | Klo: 18.00-20.30</description>
       <guid isPermaLink="false">https://hyotykasviyhdistys.fi/tapahtumat/ikebanajapanilainenkukkienasetteluntaide/</guid>
-      <pubDate>Fri, 24 Jul 2026 15:20:35 +0300</pubDate>
-    </item>
-    <item>
-      <title>Syysmatka Viroon</title>
-      <link>https://hyotykasviyhdistys.fi/tapahtumat/syysmatka-viroon/</link>
-      <description>11.09.2026                           - 12.09.2026 | Klo: 08.00-21.00</description>
-      <guid isPermaLink="false">https://hyotykasviyhdistys.fi/tapahtumat/syysmatka-viroon/</guid>
       <pubDate>Fri, 24 Jul 2026 15:20:35 +0300</pubDate>
     </item>
     <item>
@@ -30,27 +23,6 @@
       <pubDate>Fri, 24 Jul 2026 15:20:35 +0300</pubDate>
     </item>
     <item>
-      <title>TIISTAITEEMAT 2026</title>
-      <link>https://hyotykasviyhdistys.fi/tapahtumat/tiistaiteemat-2026/</link>
-      <description>26.05.2026                           - 25.08.2026 | Klo: 17.30 (luento/kierros) 16-17.30 kahvila</description>
-      <guid isPermaLink="false">https://hyotykasviyhdistys.fi/tapahtumat/tiistaiteemat-2026/</guid>
-      <pubDate>Fri, 24 Jul 2026 15:20:35 +0300</pubDate>
-    </item>
-    <item>
-      <title>SYYSTORI</title>
-      <link>https://hyotykasviyhdistys.fi/tapahtumat/syystori-6/</link>
-      <description>05.09.2026                           - 05.09.2026 | Klo: 11-15</description>
-      <guid isPermaLink="false">https://hyotykasviyhdistys.fi/tapahtumat/syystori-6/</guid>
-      <pubDate>Fri, 14 Aug 2026 00:33:00 +0300</pubDate>
-    </item>
-    <item>
-      <title>KASVIVÄRJÄYSKURSSI</title>
-      <link>https://hyotykasviyhdistys.fi/tapahtumat/kasvivarjayskurssi-2/</link>
-      <description>18.09.2026                           - 19.09.2026 | Klo: PE klo 16-19 JA LA klo 10-15</description>
-      <guid isPermaLink="false">https://hyotykasviyhdistys.fi/tapahtumat/kasvivarjayskurssi-2/</guid>
-      <pubDate>Tue, 25 Aug 2026 16:39:29 +0300</pubDate>
-    </item>
-    <item>
       <title>ALKU&amp;JUURI PUOTI SIJAITSEE PASILASSA</title>
       <link>https://hyotykasviyhdistys.fi/tapahtumat/puoti-aukeaa-uudessa-osoitteessa/</link>
       <description>08.09.2026 | Klo: 10-17</description>
@@ -58,11 +30,18 @@
       <pubDate>Tue, 25 Aug 2026 16:39:29 +0300</pubDate>
     </item>
     <item>
-      <title>SIENIVILJELY DEMO VIIMEISESSÄ TIISTAITEEMASSA</title>
-      <link>https://hyotykasviyhdistys.fi/tapahtumat/sieniviljely-demo-viimeisessa-tiistaiteemassa/</link>
-      <description>01.09.2026 | Klo: 17.30</description>
-      <guid isPermaLink="false">https://hyotykasviyhdistys.fi/tapahtumat/sieniviljely-demo-viimeisessa-tiistaiteemassa/</guid>
-      <pubDate>Tue, 25 Aug 2026 16:39:29 +0300</pubDate>
+      <title>ANNALAN JOULUTORI</title>
+      <link>https://hyotykasviyhdistys.fi/tapahtumat/annalan-joulutori/</link>
+      <description>28.11.2026                           - 29.11.2026 | Klo: 11-15</description>
+      <guid isPermaLink="false">https://hyotykasviyhdistys.fi/tapahtumat/annalan-joulutori/</guid>
+      <pubDate>Thu, 15 Oct 2026 16:45:11 +0300</pubDate>
+    </item>
+    <item>
+      <title>ANNALAN JA ARABIANRANNAN KEKRI</title>
+      <link>https://hyotykasviyhdistys.fi/tapahtumat/annalan-ja-arabianrannan-kekri/</link>
+      <description>30.10.2026                           - 30.10.2026 | Klo: 16.30-21</description>
+      <guid isPermaLink="false">https://hyotykasviyhdistys.fi/tapahtumat/annalan-ja-arabianrannan-kekri/</guid>
+      <pubDate>Thu, 15 Oct 2026 16:45:11 +0300</pubDate>
     </item>
   </channel>
 </rss>
