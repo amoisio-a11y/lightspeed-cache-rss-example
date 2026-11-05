@@ -7,7 +7,7 @@
     <docs>http://www.rssboard.org/rss-specification</docs>
     <generator>python-feedgen</generator>
     <language>fi</language>
-    <lastBuildDate>Thu, 05 Nov 2026 07:28:54 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 05 Nov 2026 16:54:49 +0000</lastBuildDate>
     <item>
       <title>IKEBANA – JAPANILAINEN KUKKIENASETTELUN TAIDE</title>
       <link>https://hyotykasviyhdistys.fi/tapahtumat/ikebanajapanilainenkukkienasetteluntaide/</link>
@@ -35,13 +35,6 @@
       <description>28.11.2026                           - 29.11.2026 | Klo: 11-15</description>
       <guid isPermaLink="false">https://hyotykasviyhdistys.fi/tapahtumat/annalan-joulutori/</guid>
       <pubDate>Thu, 15 Oct 2026 16:45:11 +0300</pubDate>
-    </item>
-    <item>
-      <title>SÄÄNTÖMÄÄRÄINEN SYYSKOKOUS</title>
-      <link>https://hyotykasviyhdistys.fi/tapahtumat/saantomaarainen-syyskokous-2/</link>
-      <description>04.11.2026 | Klo: 18.00</description>
-      <guid isPermaLink="false">https://hyotykasviyhdistys.fi/tapahtumat/saantomaarainen-syyskokous-2/</guid>
-      <pubDate>Thu, 22 Oct 2026 17:09:37 +0300</pubDate>
     </item>
   </channel>
 </rss>
