@@ -7,14 +7,7 @@
     <docs>http://www.rssboard.org/rss-specification</docs>
     <generator>python-feedgen</generator>
     <language>fi</language>
-    <lastBuildDate>Mon, 09 Nov 2026 07:19:58 +0000</lastBuildDate>
-    <item>
-      <title>Helsingin Konservatorioon on valittu 37 uutta ammatillisen koulutuksen opiskelijaa</title>
-      <link>https://www.konservatorio.fi/uutiset/helsingin-konservatorioon-on-valittu-37-uutta-ammatillisen-koulutuksen-opiskelijaa/</link>
-      <description>Helsingin Konservatorion ammatilliseen musiikkialan perustutkintokoulutukseen on valittu 37 uutta opiskelijaa: 27 klassisen musiikin muusikon osaamisalalle sekä 10 pianonvirityksen osaamisalalle. Lisäksi tutkinnonosia suorittamaan valittiin kuusi…</description>
-      <guid isPermaLink="false">https://www.konservatorio.fi/uutiset/helsingin-konservatorioon-on-valittu-37-uutta-ammatillisen-koulutuksen-opiskelijaa/</guid>
-      <pubDate>Thu, 11 Jun 2026 08:00:00 +0300</pubDate>
-    </item>
+    <lastBuildDate>Mon, 09 Nov 2026 19:16:11 +0000</lastBuildDate>
     <item>
       <title>Lukuvuoden 2026-2027 alkuun liittyvää informaatiota</title>
       <link>https://www.konservatorio.fi/uutiset/lukuvuoden-2026-2027-alkuun-liittyvaa-informaatiota/</link>
@@ -77,6 +70,13 @@
       <description>Alumnimme ja Helsinki Lied -voittajamme (vuoden 2021 kilpailun A-sarja), sopraano amria Turunen ja pianisti Armaan Madar kertovat synkkiä satuja Helsingin Konservatoriossa lauantaina 7.11. klo 18.00.</description>
       <guid isPermaLink="false">https://www.konservatorio.fi/uutiset/synkkia-satuja-konserttisalissa/</guid>
       <pubDate>Wed, 04 Nov 2026 08:00:00 +0200</pubDate>
+    </item>
+    <item>
+      <title>Vielä on syksyä jäljellä, samoin syyskonsertteja!</title>
+      <link>https://www.konservatorio.fi/uutiset/viela-on-syksya-jaljella-samoin-syyskonsertteja/</link>
+      <description>Marraskuu on mainiota aikaa tulla konserttiin, ja meiltähän niitä löytyy! Liediä, viuluja, pianistien konsertteja, eikä instrumenttivalikoima tähän lopu! Viulut soivat saleissamme maanantaina 9.11. klo…</description>
+      <guid isPermaLink="false">https://www.konservatorio.fi/uutiset/viela-on-syksya-jaljella-samoin-syyskonsertteja/</guid>
+      <pubDate>Mon, 09 Nov 2026 08:00:00 +0200</pubDate>
     </item>
   </channel>
 </rss>
